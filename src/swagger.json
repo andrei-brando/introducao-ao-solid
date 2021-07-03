@@ -1,0 +1,338 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Introdução ao SOLID Documentation",
+    "description": "This is an API to project 'Introdução ao SOLID'",
+    "version": "1.0.0",
+    "contact": {
+      "email": "albertbrando@hotmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "description": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Dani Evangelista",
+                  "email": "dani@rocketseat.com.br"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "uid": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "example": {
+                    "admin": false,
+                    "name": "Dani Evangelista",
+                    "email": "dani@rocketseat.com.br",
+                    "created_at": "2021-06-30",
+                    "updated_at": "2021-06-30"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "decription": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "error": {
+                      "type": "string",
+                      "example": "Usuário já cadastrado com este e-mail!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "List all users",
+        "description": "List all users",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "ID of the user logged",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties":{
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "uid": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    },
+                    "example": {
+                      "admin": false,
+                      "name": "Dani Evangelista",
+                      "email": "dani@rocketseat.com.br",
+                      "created_at": "2021-06-30",
+                      "updated_at": "2021-06-30"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "decription": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "error": {
+                      "example": "Você não tem acesso a lista de usuários"
+                    }               
+                  }
+                },
+                "examples": {
+                  "properties":{
+                    "error": {
+                      "example": "Você não tem acesso a lista de usuários"
+                    }               
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Set user to admin",
+        "description": "This route will set a user from params to admin",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "uid": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "example": {
+                    "admin": true,
+                    "name": "Dani Evangelista",
+                    "email": "dani@rocketseat.com.br",
+                    "created_at": "2021-06-30",
+                    "updated_at": "2021-06-30"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "decription": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "error": {
+                      "example": "Usuário informado não existe"
+                    }               
+                  },
+                  "example": "Usuário informado não existe"
+                  
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Search an user",
+        "description": "This route will search an user with user_if from params",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "uid": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "example": {
+                    "admin": false,
+                    "name": "Dani Evangelista",
+                    "email": "dani@rocketseat.com.br",
+                    "created_at": "2021-06-30",
+                    "updated_at": "2021-06-30"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "decription": "Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "error": {
+                      "type": "string",
+                      "example": "Usuário não encontrado!"
+                    }
+                  },
+                  "example": {
+                    "error": "Usuário não encontrado!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

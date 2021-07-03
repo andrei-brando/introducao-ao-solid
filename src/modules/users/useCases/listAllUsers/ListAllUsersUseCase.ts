@@ -11,7 +11,7 @@ class ListAllUsersUseCase {
   public execute({ user_id }: IRequest): User[] {
     const user = this.usersRepository.findById(user_id);
 
-    if (!user.admin || !user)
+    if (!user?.admin || !user)
       throw new Error("Você não tem acesso a lista de usuários");
 
     return this.usersRepository.list();
